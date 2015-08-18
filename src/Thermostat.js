@@ -10,17 +10,26 @@ function Thermostat() {
 	this.resetTemperature = 20;
 	this.greenLimit = 18;
 	this.redLimit = 24;
+	this.psmStatus = 'Power Saving Mode ON';
+	this.onMode = 'Power Saving Mode ON';
+	this.offMode = 'Power Saving Mode OFF';
 };
 
-Thermostat.prototype.OffPowerSavingMode = function() {
-		this.PowerSavingMode = false;
+Thermostat.prototype.SwitchPowerSavingMode = function() {
+		if (this.PowerSavingMode === true){
+			this.PowerSavingMode = false
+			this.psmStatus = this.offMode;
+		} else {
+			this.PowerSavingMode = true
+			this.psmStatus = this.onMode;
+		}
 	};
 
-Thermostat.prototype.OnPowerSavingMode = function() {
-		if (this.degrees > this.MaxPSMOn){
+Thermostat.prototype.checkMaximum = function() {
+		if (this.PowerSavingMode === true && this.degrees > this.MaxPSMOn) {
 			this.degrees = this.MaxPSMOn;
 		}
-		this.PowerSavingMode = true;
+		return this.degrees
 };
 
 Thermostat.prototype.increase = function() {
@@ -29,6 +38,7 @@ Thermostat.prototype.increase = function() {
 	} else {
 	this.degrees += 1;
 	}
+	return this.degrees;
 };
 
 Thermostat.prototype.decrease = function() {
@@ -41,10 +51,11 @@ Thermostat.prototype.decrease = function() {
 
 Thermostat.prototype.maximum = function() {
 	if (this.PowerSavingMode === true){
-		this.MaxTemperature = this.MaxPSMOn
+		this.MaxTemperature = this.MaxPSMOn;
 	} else {
-		this.MaxTemperature = this.MaxPSMOff
+		this.MaxTemperature = this.MaxPSMOff;
 	}
+	return this.MaxTemperature;
 };
 
 Thermostat.prototype.resetButton = function() {
@@ -60,5 +71,6 @@ Thermostat.prototype.colorControl = function() {
 	} else {
 		this.colorCode = 'yellow';
 	}
+	return this.colorCode;
 };
 

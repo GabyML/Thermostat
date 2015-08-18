@@ -21,14 +21,30 @@ describe('Thermostat', function(){
 	describe('Power Saving Mode', function(){
 
 		it('can turn off the Power Saving Mode', function(){
-			thermostat.OffPowerSavingMode()
+			thermostat.PowerSavingMode = true
+			thermostat.SwitchPowerSavingMode()
 			expect(thermostat.PowerSavingMode).toBe(false)
 		});
 
+		it('can change status when Power Saving Mode is turned off', function(){
+			thermostat.PowerSavingMode = true
+			thermostat.SwitchPowerSavingMode()
+			expect(thermostat.psmStatus).toEqual('Power Saving Mode OFF')
+		});
+
 		it('can turn on the Power Saving Mode', function(){
-			thermostat.OnPowerSavingMode()
+			thermostat.PowerSavingMode = false
+			thermostat.SwitchPowerSavingMode()
 			expect(thermostat.PowerSavingMode).toBe(true)
 		});
+
+		it('can change status when Power Saving Mode is turned on', function(){
+			thermostat.PowerSavingMode = false
+			thermostat.SwitchPowerSavingMode()
+			expect(thermostat.psmStatus).toEqual('Power Saving Mode ON')
+		});
+
+
 	});
 
 	describe('Change temperature', function(){
@@ -75,7 +91,8 @@ describe('Thermostat', function(){
 
 		it('sets temperature to 25 if Power Saving Mode is turned On and temperature is above 25', function(){
 			thermostat.degrees = 30
-			thermostat.OnPowerSavingMode()
+			thermostat.PowerSavingMode = true
+			thermostat.checkMaximum()
 			expect(thermostat.degrees).toEqual(thermostat.MaxPSMOn)
 		});
 	});
