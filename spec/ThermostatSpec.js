@@ -1,27 +1,112 @@
 describe('Thermostat', function(){
 
-	var t;
+	var thermostat;
 
 	beforeEach(function() {
-		t = new Thermostat();
+		thermostat = new Thermostat();
+		temperature = thermostat.degrees
 	});
 	
 	describe('Starting State', function(){
 
 		it('has a starting default temperature of 20 degrees', function(){
-			expect(t.degrees).toEqual(20);
+			expect(thermostat.degrees).toEqual(thermostat.degreesStarting);
 		});
 
 		it('starts with Power Saving Mode On', function(){
-			expect(t.PowerSavingMode).toBe(true);
+			expect(thermostat.PowerSavingMode).toBe(true);
 		});
+	});
+
+	describe('Power Saving Mode', function(){
 
 		it('can turn off the Power Saving Mode', function(){
-			expect(t.OffPowerSavingMode()).toBe(false)
+			thermostat.OffPowerSavingMode()
+			expect(thermostat.PowerSavingMode).toBe(false)
 		});
 
 		it('can turn on the Power Saving Mode', function(){
-			expect(t.OnPowerSavingMode()).toBe(true)
+			thermostat.OnPowerSavingMode()
+			expect(thermostat.PowerSavingMode).toBe(true)
 		});
+	});
+
+	describe('Change temperature', function(){
+
+		it('can increase the temperature', function(){
+			thermostat.increase()
+			expect(thermostat.degrees).toEqual(temperature + 1)
+		});
+
+		it('can decrease the temperature', function(){
+			thermostat.decrease()
+			expect(thermostat.degrees).toEqual(temperature - 1)
+		});
+	});
+
+	describe('Minimum temperature', function(){
+
+		it('has a minimum temperature of 10 degrees', function(){
+			thermostat.degrees = thermostat.MinTemperature
+			thermostat.decrease
+			expect(thermostat.degrees).toEqual(thermostat.MinTemperature)
+		});
+	});
+
+	describe('Maximum tempearture', function(){
+
+		it('has a maximum temperature', function(){
+			thermostat.degrees = thermostat.MaxTemperature
+			thermostat.increase()
+			expect(thermostat.degrees).toEqual(thermostat.MaxTemperature)
+		});
+
+		it('has a maximum temperature of 25 if Power Saving Mode is on', function(){
+			thermostat.PowerSavingMode = true
+			thermostat.maximum()
+			expect(thermostat.MaxTemperature).toEqual(thermostat.MaxPSMOn)
+		});
+
+		it('has a maximum temperature of 32 if Power Saving Mode is off', function(){
+			thermostat.PowerSavingMode = false
+			thermostat.maximum()
+			expect(thermostat.MaxTemperature).toEqual(thermostat.MaxPSMOff)
+		});
+
+		it('sets temperature to 25 if Power Saving Mode is turned On and temperature is above 25', function(){
+			thermostat.degrees = 30
+			thermostat.OnPowerSavingMode()
+			expect(thermostat.degrees).toEqual(thermostat.MaxPSMOn)
+		});
+	});
+
+	describe('Reset button', function(){
+
+		it('goes to 20 after calling reset', function(){
+			thermostat.resetButton()
+			expect(temperature).toEqual(thermostat.resetTemperature)
+		});
+	});
+
+	describe('Color code',function(){
+
+		it('is green when temperature is - < 18', function(){
+			thermostat.degrees = 13
+			thermostat.colorControl()
+			expect(thermostat.colorCode).toMatch('green')
+		});
+
+		it('is green when temperature is from 19 to 24', function(){
+			thermostat.degrees = 23
+			thermostat.colorControl()
+			expect(thermostat.colorCode).toMatch('yellow')
+		});
+
+		it('is green when temperature is > 24', function(){
+			thermostat.degrees = 25
+			thermostat.colorControl()
+			expect(thermostat.colorCode).toMatch('red')
+		});
+
 	});
 });
