@@ -4,21 +4,21 @@ var temperatureElement = document.getElementById('temperature');
 temperatureElement.innerHTML = thermostat.degrees;
 temperature.style.color = thermostat.colorControl();
 
-var increaseElement = document.getElementById('increase_button');
-increaseElement.onclick = function(){
+var upButton = document.getElementsByTagName('button')[0];
+upButton.onclick = function(){
 	thermostat.increase();
 	temperatureElement.innerHTML = thermostat.degrees;
 	temperature.style.color = thermostat.colorControl();
 };
 
-var decreaseElement = document.getElementById('decrease_button');
+var decreaseElement = document.getElementsByTagName('button')[1];
 decreaseElement.onclick = function(){
 	thermostat.decrease();
 	temperatureElement.innerHTML = thermostat.degrees;
 	temperature.style.color = thermostat.colorControl();
 };
 
-var powerSavingElement = document.getElementById('switch_psm');
+var powerSavingElement = document.getElementsByTagName('button')[2];
 powerSavingElement.onclick = function(){
 	thermostat.SwitchPowerSavingMode();
 	thermostat.maximum();
@@ -28,7 +28,7 @@ powerSavingElement.onclick = function(){
 	temperature.style.color = thermostat.colorControl();
 };
 
-var resetElement = document.getElementById('reset');
+var resetElement = document.getElementsByTagName('button')[3];
 resetElement.onclick = function(){
 	thermostat.resetButton();
 	temperatureElement.innerHTML = thermostat.degrees;
