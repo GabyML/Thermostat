@@ -1,39 +1,42 @@
 var thermostat = new Thermostat();
 
-var temperatureElement = document.getElementById('temperature');
+var temperatureElement = document.getElementsByTagName('span')[0];
+ShowTemperature = function() {
 temperatureElement.innerHTML = thermostat.degrees;
-temperature.style.color = thermostat.colorControl();
+};
+TemperatureColor = function() {
+temperatureElement.style.color = thermostat.colorControl();
+};
+ShowTemperature();
+TemperatureColor();
 
 var upButton = document.getElementsByTagName('button')[0];
 upButton.onclick = function(){
 	thermostat.increase();
-	temperatureElement.innerHTML = thermostat.degrees;
-	temperature.style.color = thermostat.colorControl();
+    ShowTemperature();
+	TemperatureColor();
 };
 
 var decreaseElement = document.getElementsByTagName('button')[1];
 decreaseElement.onclick = function(){
 	thermostat.decrease();
-	temperatureElement.innerHTML = thermostat.degrees;
-	temperature.style.color = thermostat.colorControl();
+    ShowTemperature();
+	TemperatureColor();
 };
 
-var powerSavingElement = document.getElementsByTagName('button')[2];
+var powerSavingElement = document.getElementsByTagName('input')[0];
 powerSavingElement.onclick = function(){
 	thermostat.SwitchPowerSavingMode();
 	thermostat.maximum();
 	thermostat.checkMaximum();
-	temperatureElement.innerHTML = thermostat.degrees;
-	powerSavingStatus.innerHTML = thermostat.psmStatus;
-	temperature.style.color = thermostat.colorControl();
+    ShowTemperature();
+	TemperatureColor();
 };
 
-var resetElement = document.getElementsByTagName('button')[3];
+var resetElement = document.getElementsByTagName('button')[2];
 resetElement.onclick = function(){
 	thermostat.resetButton();
-	temperatureElement.innerHTML = thermostat.degrees;
-	temperature.style.color = thermostat.colorControl();	
+    ShowTemperature();
+	TemperatureColor();	
 };
 
-var powerSavingStatus = document.getElementById('psm_status');
-powerSavingStatus.innerHTML = thermostat.psmStatus;
