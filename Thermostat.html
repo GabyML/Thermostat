@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="lib/jquery-2.1.4.js"></script>
-<script src="src/Thermostat.js"></script>
 <meta charset="utf-8">
 <title>Thermostat</title>
 </head>
@@ -10,18 +8,26 @@
 <body>
   <article>
   <section><span class="temperature"></span>°C</section>
-  <button type="button">+</button>
-  <button type="button">-</button>
-  <button type="button">Reset</button>
-  <input type="checkbox" checked>Power Saving Mode</button>
+  <button data-temp-control="up" type="button">+</button>
+  <button data-temp-control="down" type="button">-</button>
+  <button data-temp-reset="reset" type="button">Reset</button>
+  <input name="power_saving_mode" type="checkbox" class="cbx hidden" id="unchecked" checked/>Power Saving Mode<label for="unchecked" class"lbl"></label>
   </br> </br>
   <button class="see_weather">Today's Weather</button>
   <section class="weather"></section>
   <section class="weather_temp"></section>
   <section class="weather_image"></section>
+  <section class="cityname"></section>
+
+  <form method="post">
+  <input id="city" type="text">
+  <button type="button" id="getWeather">Write your city</button>
+  </form>
   </article>
-  <script type="text/javascript" src="src/Thermostat.js"></script>
-  <script type="text/javascript" src="src/App_jQuery.js"></script>
+
+  <script src="lib/jquery-2.1.4.js"></script>
+  <script src="src/Thermostat.js"></script>
+  <script src="src/App_jQuery.js"></script>
 
 </body>
 </html>

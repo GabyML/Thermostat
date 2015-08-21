@@ -1,4 +1,4 @@
-describe('Thermostat', function(){
+describe('Thermostat Logic', function(){
 
 	var thermostat;
 

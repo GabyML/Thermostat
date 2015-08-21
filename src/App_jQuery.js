@@ -4,7 +4,7 @@ $( document ).ready(function(){
 
 	var temperature = $('span')[0];
 	ShowTemperature = function() {
-		temperature.innerHTML = thermostat.degrees;
+		$('.temperature').html(thermostat.degrees);
 	};
 	TemperatureColor = function() {
 		temperature.style.color = thermostat.colorControl();
@@ -15,7 +15,11 @@ $( document ).ready(function(){
 	}); // links html file with processed info
 
 	function getWeather(){
-		$.getJSON("http://api.openweathermap.org/data/2.5/weather?q=London&units=metric", function(info) {
+		var userCity= $("#city").val();
+		$.getJSON("http://api.openweathermap.org/data/2.5/weather?q="+ userCity +"&units=metric", function(info) {
+			$(".cityname").html("City:" + info.name);
+			$(".weather").html("Weather:" + info.weather[0].main);
+			$(".weather_temp").html("Temperature(°C):"+ info.main.temp);
 			showWeather(info);
 		})
 	}; // gets info from server
@@ -30,25 +34,25 @@ $( document ).ready(function(){
   	ShowTemperature();
   	TemperatureColor();
 
-   $('button').eq(0).click(function(){
+   $("button[data-temp-control='up']").click(function(){
 	thermostat.increase();
     ShowTemperature();
 	TemperatureColor();
    });
 
-   $('button').eq(1).click(function(){
+   $("button[data-temp-control='down']").click(function(){
    	thermostat.decrease();
    	ShowTemperature();
 	TemperatureColor();
    });
 
-   $('button').eq(2).click(function(){
+   $("button[data-temp-reset='reset']").click(function(){
    	thermostat.resetButton();
    	ShowTemperature();
 	TemperatureColor();
    });
 
-   $('input').eq(0).change(function() {
+   $("input:checkbox").change(function() {
     thermostat.SwitchPowerSavingMode();
 	thermostat.maximum();
 	thermostat.checkMaximum();
